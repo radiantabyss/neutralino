@@ -30,7 +30,7 @@ function addRoute(method, path, action, middleware, name, throw_error) {
         return;
     }
 
-    RouteFiles[__route_file].push({
+    RouteFiles[__neutralino_route_file].push({
         name: action_name,
         component,
         path,

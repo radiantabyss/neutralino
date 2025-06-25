@@ -1,32 +1,4 @@
 let self = {
-    dmp(text) {
-        console.log(text);
-    },
-
-    handleEmpty(items) {
-        if ( items === false ) {
-            return false;
-        }
-
-        if ( items === null ) {
-            return null;
-        }
-
-        if ( Array.isArray(items) && !items.length ) {
-            return [];
-        }
-
-        if ( !Array.isArray(items) && !Object.keys(items).length ) {
-            return {};
-        }
-
-        return true;
-    },
-
-    array_unique(arr) {
-        return [...new Set(arr)];
-    },
-
     decode_json(string) {
         if ( typeof string == 'string') {
             return JSON.parse(string);

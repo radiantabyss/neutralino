@@ -4,9 +4,9 @@ import RouteFiles from './RouteFiles.js';
 import Route from './Route.js';
 import RouteCrud from './RouteCrud.js';
 
-window.RouteFiles = RouteFiles;
-window.Route = Route;
-window.RouteCrud = RouteCrud;
+window.RA.RouteFiles = RouteFiles;
+window.RA.Route = Route;
+window.RA.RouteCrud = RouteCrud;
 
 let Routes = [];
 
@@ -14,15 +14,15 @@ let Routes = [];
 let context = import.meta.glob('/app/Routes/**/*.js');
 
 const loadModules = async () => {
-    window.Actions = await Actions();
+    window.RA.Actions = await Actions();
     const files = Object.keys(context);
 
     for ( let i = 0; i < files.length; i++ ) {
         let file = files[i].replace('/app/Routes/', '').replace(/\.js$/, '');
-        window.__route_file = file;
+        window.RA.__neutralino_route_file = file;
 
-        if ( !RouteFiles[__route_file] ) {
-            RouteFiles[__route_file] = [];
+        if ( !RouteFiles[window.RA.__neutralino_route_file] ) {
+            RouteFiles[window.RA.__neutralino_route_file] = [];
         }
 
         await context[files[i]]();
@@ -88,7 +88,7 @@ export default async () => {
     await loadModules();
 
     //handle route matching
-    window.IPC.handle('invoke', async (event, args) => {
+    IPC.handle('invoke', async (event, args) => {
         args.payload = JSON.parse(args.payload);
 
         let matched = await match(args, event);
