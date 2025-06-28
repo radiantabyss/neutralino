@@ -7,33 +7,33 @@ const self = {
         await Neutralino.filesystem.writeFile(`${APP_PATH}/configs/${config}.json`, JSON.stringify(data, null, 4));
     },
 
-    get(config) {
-        return self.read(config);
+    async get(config) {
+        return await self.read(config);
     },
 
-    getKey(config, key) {
-        let data = self.read(config);
+    async getKey(config, key) {
+        let data = await self.read(config);
         return data[key];
     },
 
-    set(config, data) {
-        self.write(config, data);
+    async set(config, data) {
+        await self.write(config, data);
     },
 
-    setKey(config, key, value) {
-        let data = self.read(config);
+    async setKey(config, key, value) {
+        let data = await self.read(config);
         data[key] = value;
-        self.write(config, data);
+        await self.write(config, data);
     },
 
-    deleteKey(config, key) {
-        let data = self.read(config);
+    async deleteKey(config, key) {
+        let data = await self.read(config);
         delete data[key];
-        self.write(config, data);
+        await self.write(config, data);
     },
 
-    clear(config) {
-        self.write(config, {});
+    async clear(config) {
+        await self.write(config, {});
     },
 };
 

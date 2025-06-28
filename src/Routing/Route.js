@@ -1,12 +1,11 @@
+import Str from './../Support/Str';
+
 let group_middleware = null;
 
 function addRoute(method, path, action, middleware, name, throw_error) {
     if ( !action ) {
         throw `Action missing for ${path}`;
     }
-
-    //format path
-    path = path.replace(/\{([\s\S]+?)\}/g, ':$1');
 
     //get action
     action = action.replace(/\\/g, '.').replace(/\//g, '.');
@@ -21,7 +20,7 @@ function addRoute(method, path, action, middleware, name, throw_error) {
 
     let component;
     try {
-        component = getAction(Actions, split[split.length - 1], namespace, action_name);
+        component = getAction(window.RA.Neu.Actions, split[split.length - 1], namespace, action_name);
     }
     catch(e) {
         if ( throw_error ) {
@@ -30,7 +29,7 @@ function addRoute(method, path, action, middleware, name, throw_error) {
         return;
     }
 
-    window.RA.RouteFiles[__neutralino_route_file].push({
+    window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file].push({
         name: action_name,
         component,
         path,

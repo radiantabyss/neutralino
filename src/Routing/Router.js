@@ -4,9 +4,9 @@ import RouteFiles from './RouteFiles.js';
 import Route from './Route.js';
 import RouteCrud from './RouteCrud.js';
 
-window.RA.RouteFiles = RouteFiles;
-window.RA.Route = Route;
-window.RA.RouteCrud = RouteCrud;
+window.RA.Neu.RouteFiles = RouteFiles;
+window.RA.Neu.Route = Route;
+window.RA.Neu.RouteCrud = RouteCrud;
 
 let Routes = [];
 
@@ -14,15 +14,15 @@ let Routes = [];
 let context = import.meta.glob('/app/Routes/**/*.js');
 
 const loadModules = async () => {
-    window.RA.Actions = await Actions();
+    window.RA.Neu.Actions = await Actions();
     const files = Object.keys(context);
 
     for ( let i = 0; i < files.length; i++ ) {
         let file = files[i].replace('/app/Routes/', '').replace(/\.js$/, '');
-        window.RA.__neutralino_route_file = file;
+        window.RA.Neu.__neutralino_route_file = file;
 
-        if ( !RouteFiles[window.RA.__neutralino_route_file] ) {
-            RouteFiles[window.RA.__neutralino_route_file] = [];
+        if ( !window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file] ) {
+            window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file] = [];
         }
 
         await context[files[i]]();
@@ -69,10 +69,12 @@ const match = async(args, event) => {
             for (let i = 1; i < match.length; i++) {
                 params.push(match[i]);
             }
+
+            break;
         }
     }
 
-    Invoke.data = args.payload;
+    Invoked.data = args.payload;
     params.push(event);
 
     return {
