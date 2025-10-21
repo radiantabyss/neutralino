@@ -3,20 +3,29 @@ import Invoked from './Invoked.js';
 import Validator from './Validator.js';
 import IPC from './IPC.js';
 
+import Globals from './Support/Globals.js';
 import Config from './Support/Config.js';
-import Env from './Support/Env.js';
+import Storage from './Support/Storage.js';
 import Helpers from './Support/Helpers.js';
 
-window.RA.Neu = {};
+window.RA = {};
 
-export default () => {
+export default async () => {
+    Neutralino.init();
+
+    window.Config = Config;
+    window.Storage = Storage;
+
+    //globals
+    let globals = await Globals();
+    for (let key in globals) {
+        window[key] = globals[key];
+    }
+
     //helpers
     for ( let key in Helpers ) {
         window[key] = Helpers[key];
     }
-
-    window.Config = Config;
-    window.Env = Env;
 
     window.Response = Response;
     window.Invoked = Invoked;

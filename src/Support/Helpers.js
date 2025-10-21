@@ -1,4 +1,9 @@
 let self = {
+    dmp(text) {
+        // eslint-disable-next-line
+        console.log(text);
+    },
+    
     decode_json(string) {
         if ( typeof string == 'string') {
             return JSON.parse(string);
