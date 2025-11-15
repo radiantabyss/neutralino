@@ -1,4 +1,4 @@
-import * as ValidatorJS from 'validatorjs';
+import * as ValidatorJS from 'validatorjs/dist/validator.js';
 
 let self = {
     make(data, rules, messages) {

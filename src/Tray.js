@@ -1,5 +1,6 @@
 let TrayActions = {};
 let context = import.meta.glob('/app/Tray/**/*.js');
+let inited = false;
 
 //load context menu files
 const loadModules = async () => {
@@ -18,17 +19,29 @@ export default async (tray) => {
 		return;
 	}
 
-    await loadModules();
+	if ( !inited ) {
+	    await loadModules();
 
-	for ( let item of tray.menuItems ) {
-		if ( item.id && !TrayActions[item.id] ) {
-			throw `Tray Action ${item.id} not found.`;
+		for ( let item of tray.menuItems ) {
+			if ( !item.id ) {
+				continue;
+			}
+
+			let split = item.id.split('/');
+			if ( !TrayActions[split[0]] ) {
+				throw `Tray Action "${item.id}" not found.`;
+			}
 		}
-	}
 
-	Neutralino.events.on('trayMenuItemClicked', (e) => {
-		TrayActions[e.detail.id].run();
-    });
+		Neutralino.events.on('trayMenuItemClicked', (e) => {
+			let split = e.detail.id.split('/');
+			let action_name = split[0];
+			split.shift();
+			TrayActions[action_name].run.apply(this, split);
+	    });
+
+		inited = true;
+	}
 
     Neutralino.os.setTray(tray);
 };

@@ -20,16 +20,16 @@ function addRoute(method, path, action, middleware, name, throw_error) {
 
     let component;
     try {
-        component = getAction(window.RA.Neu.Actions, split[split.length - 1], namespace, action_name);
+        component = getAction(window.RA.Actions, split[split.length - 1], namespace, action_name);
     }
     catch(e) {
         if ( throw_error ) {
-            throw `Action ${action_name} doesn't exist.`;
+            throw `Action "${action_name}" doesn't exist.`;
         }
         return;
     }
 
-    window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file].push({
+    window.RA.RouteFiles[window.RA.__neutralino_route_file].push({
         name: action_name,
         component,
         path,

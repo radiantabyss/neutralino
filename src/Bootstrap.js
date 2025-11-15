@@ -7,6 +7,8 @@ import Globals from './Support/Globals.js';
 import Config from './Support/Config.js';
 import Storage from './Support/Storage.js';
 import Helpers from './Support/Helpers.js';
+import Item from './Support/Item';
+import Items from './Support/Items';
 
 window.RA = {};
 
@@ -15,6 +17,8 @@ export default async () => {
 
     window.Config = Config;
     window.Storage = Storage;
+    window.Item = Item;
+    window.Items = Items;
 
     //globals
     let globals = await Globals();

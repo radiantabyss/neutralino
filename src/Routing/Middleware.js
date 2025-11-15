@@ -24,7 +24,7 @@ let runMiddleware = async (to, from, i = 0) => {
 
     //middleware doesnt exist
     if ( !Middleware[to.meta.middleware[i]] ) {
-        throw new Error(`${to.meta.middleware[i]} Middleware not found.`);
+        throw new Error(`Middleware "${to.meta.middleware[i]}" not found.`);
     }
 
     //run middleware

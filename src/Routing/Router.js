@@ -4,9 +4,9 @@ import RouteFiles from './RouteFiles.js';
 import Route from './Route.js';
 import RouteCrud from './RouteCrud.js';
 
-window.RA.Neu.RouteFiles = RouteFiles;
-window.RA.Neu.Route = Route;
-window.RA.Neu.RouteCrud = RouteCrud;
+window.RA.RouteFiles = RouteFiles;
+window.RA.Route = Route;
+window.RA.RouteCrud = RouteCrud;
 
 let Routes = [];
 
@@ -14,22 +14,22 @@ let Routes = [];
 let context = import.meta.glob('/app/Routes/**/*.js');
 
 const loadModules = async () => {
-    window.RA.Neu.Actions = await Actions();
+    window.RA.Actions = await Actions();
     const files = Object.keys(context);
 
     for ( let i = 0; i < files.length; i++ ) {
         let file = files[i].replace('/app/Routes/', '').replace(/\.js$/, '');
-        window.RA.Neu.__neutralino_route_file = file;
+        window.RA.__neutralino_route_file = file;
 
-        if ( !window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file] ) {
-            window.RA.Neu.RouteFiles[window.RA.Neu.__neutralino_route_file] = [];
+        if ( !window.RA.RouteFiles[window.RA.__neutralino_route_file] ) {
+            window.RA.RouteFiles[window.RA.__neutralino_route_file] = [];
         }
 
         await context[files[i]]();
     }
 }
 
-const match = async(args, event) => {
+const match = async(args) => {
     let matched = null;
     let params = [];
 
@@ -75,7 +75,6 @@ const match = async(args, event) => {
     }
 
     Invoked.data = args.payload;
-    params.push(event);
 
     return {
         Route: matched,
@@ -90,12 +89,12 @@ export default async () => {
     await loadModules();
 
     //handle route matching
-    IPC.handle('invoke', async (event, args) => {
+    IPC.handle('invoke', async (args) => {
         args.payload = JSON.parse(args.payload);
 
-        let matched = await match(args, event);
+        let matched = await match(args);
         if ( !matched.Route ) {
-            throw `Route ${matched.path} not found.`;
+            throw `Route "${matched.path}" not found.`;
         }
 
         return await matched.Route.component.run(...matched.params);
