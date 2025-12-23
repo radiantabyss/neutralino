@@ -2,11 +2,15 @@ let self = {
     data: {},
 
     all() {
-        return self.data;
+        return JSON.parse(JSON.stringify(self.data));
     },
 
-    get(param) {
-        return self.data[param];
+    get(key) {
+        return JSON.parse(JSON.stringify(self.data[key]));
+    },
+
+    has(key) {
+        return key in self.data;
     },
 };
 
