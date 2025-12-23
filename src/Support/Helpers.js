@@ -3,7 +3,7 @@ let self = {
         // eslint-disable-next-line
         console.log(text);
     },
-    
+
     decode_json(string) {
         if ( typeof string == 'string') {
             return JSON.parse(string);
@@ -41,7 +41,7 @@ let self = {
         let timestamp = `${date.getFullYear()}-${Str.leading_zero(date.getMonth() + 1)}-${Str.leading_zero(date.getDate())}`+
             ` ${Str.leading_zero(date.getHours())}:${Str.leading_zero(date.getMinutes())}`;
 
-        await Neutralino.filesystem.appendFile(path, `[${timestamp}] ${e}`);
+        await Neutralino.filesystem.appendFile(path, `\n[${timestamp}] ${e}`);
     },
 
     async file_exists(path) {
