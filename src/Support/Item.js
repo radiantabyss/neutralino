@@ -60,7 +60,7 @@ let self = {
     },
 
 	clone(item) {
-		return JSON.parse(JSON.stringify(items));
+		return JSON.parse(JSON.stringify(item));
 	},
 };
 
