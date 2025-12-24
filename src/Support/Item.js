@@ -58,6 +58,10 @@ let self = {
     deleteKey(item, key) {
 		return self.deleteKeys(item, [key]);
     },
+
+	clone(item) {
+		return JSON.parse(JSON.stringify(items));
+	},
 };
 
 export default self;
